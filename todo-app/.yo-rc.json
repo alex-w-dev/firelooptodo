@@ -1,0 +1,22 @@
+{
+  "generator-fireloop": {
+    "version": "1.0.0-beta.2.7",
+    "clients": {
+      "todo-api": {
+        "path": "./todo-api",
+        "type": "server"
+      },
+      "todo-app": {
+        "path": "./todo-app",
+        "type": "ng2web",
+        "name": "todo-app",
+        "sdkPath": "todo-app\\src\\app\\shared\\sdk"
+      }
+    },
+    "promptValues": {
+      "sdkFeatures": [
+        "Enable PubSub + IO + FireLoop functionality"
+      ]
+    }
+  }
+}
