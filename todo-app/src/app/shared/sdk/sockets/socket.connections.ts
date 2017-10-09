@@ -70,6 +70,7 @@ export class SocketConnection {
    * If there is a broken connection it will re-connect.
    **/
   public connect(token: AccessToken = null): void {
+    console.log(1)
     if (!this.socket) {
       console.info('Creating a new connection with: ', LoopBackConfig.getPath());
       // Create new socket connection
@@ -78,27 +79,38 @@ export class SocketConnection {
         secure: LoopBackConfig.isSecureWebSocketsSet(),
         forceNew: true,
         forceWebsockets: true,
-        transports: ['websocket']
+        transports: ['websocket',
+          'flashsocket',
+          'htmlfile',
+          'xhr-polling',
+          'jsonp-polling',
+          'polling']
       });
       // Listen for connection
       this.on('connect', () => {
+        console.log('connected ...');
         this.subjects.onConnect.next('connected');
-        // Authenticate or start heartbeat now    
+        // Authenticate or start heartbeat now
         this.emit('authentication', token);
       });
       // Listen for authentication
       this.on('authenticated', () => {
+        console.log('authenticated ...');
         this.authenticated = true;
         this.subjects.onAuthenticated.next();
         this.heartbeater();
       })
       // Listen for authentication
       this.on('unauthorized', (err: any) => {
+        console.log('unauthorized ...');
         this.authenticated = false;
         this.subjects.onUnAuthorized.next(err);
       })
       // Listen for disconnections
-      this.on('disconnect', (status: any) => this.subjects.onDisconnect.next(status));
+      this.on('disconnect', (status: any) => {
+        console.log('disconnect ...');
+        this.subjects.onDisconnect.next(status);
+      });
     } else if (this.socket && !this.socket.connected){
       if (typeof this.socket.off === 'function') {
         this.socket.off();
