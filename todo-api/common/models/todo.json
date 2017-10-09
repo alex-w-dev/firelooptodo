@@ -3,6 +3,9 @@
   "plural": "todos",
   "base": "PersistedModel",
   "idInjection": true,
+  "mixins": {
+    "FireLoop": true
+  },
   "options": {
     "validateUpsert": true
   },

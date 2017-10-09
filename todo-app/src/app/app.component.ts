@@ -18,7 +18,7 @@ export class AppComponent implements OnInit{
       .onReady()
       .subscribe(() =>{
         this.reference = this.realTime.FireLoop.ref<Todo>(Todo)
-        this.reference.on('value',{
+        this.reference.on('change',{
           limit: 10,
           order: 'id DESC'
         }).subscribe((todos: Todo[]) => {
