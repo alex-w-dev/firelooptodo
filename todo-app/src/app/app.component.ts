@@ -14,21 +14,36 @@ export class AppComponent implements OnInit{
   private todos : Todo[];
   private reference : FireLoopRef<Todo>;
   constructor(private realTime: RealTime) {
-
-
     this.realTime
       .onReady()
       .subscribe(() =>{
         this.reference = this.realTime.FireLoop.ref<Todo>(Todo)
-        this.reference.on('change',{
+        this.reference.on('value',{
           limit: 10,
           order: 'id DESC'
         }).subscribe((todos: Todo[]) => {
-          console.log(todos);
-          console.log(todos);
           this.todos = todos;
         });
-      });}
+        this.reference.on('changes').subscribe((data: any) => {
+          console.log('changes: ', data);
+        });
+        this.reference.on('change').subscribe((data: any) => {
+          console.log('change: ', data);
+        });
+        this.reference.on('value').subscribe((data: any) => {
+          console.log('value: ', data);
+        });
+        this.reference.on('child_added').subscribe((data: any) => {
+          console.log('child_added: ', data);
+        });
+        this.reference.on('child_changed').subscribe((data: any) => {
+          console.log('child_changed: ', data);
+        });
+        this.reference.on('child_removed').subscribe((data: any) => {
+          console.log('child_removed: ', data);
+        });
+      });
+  }
 
   ngOnInit(): void {
   }

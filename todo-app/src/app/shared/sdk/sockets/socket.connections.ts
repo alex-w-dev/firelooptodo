@@ -70,7 +70,6 @@ export class SocketConnection {
    * If there is a broken connection it will re-connect.
    **/
   public connect(token: AccessToken = null): void {
-    console.log(1)
     if (!this.socket) {
       console.info('Creating a new connection with: ', LoopBackConfig.getPath());
       // Create new socket connection
